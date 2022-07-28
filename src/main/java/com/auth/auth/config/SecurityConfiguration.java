@@ -24,20 +24,16 @@ public class SecurityConfiguration{
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        http.httpBasic();
-        http.formLogin();
+        http.formLogin().loginPage("/login").permitAll();
         System.out.println();
         http.authorizeRequests()
                 .antMatchers("/users").hasAnyRole("ADMIN", "USER")
                 .and()
                 .authorizeRequests()
-                .antMatchers("/index")
-                .permitAll()
-                .and()
-                .authorizeRequests()
-                .antMatchers("/register")
-                .permitAll();
-
+                .antMatchers("/admin").hasRole("ADMIN")
+                .and().authorizeRequests()
+                .antMatchers("/dashboard").hasRole("USER")
+                .and().authorizeRequests().antMatchers("/").permitAll();
         return http.build();
     }
 

@@ -5,21 +5,19 @@ import com.auth.auth.model.User;
 import com.auth.auth.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
-@RestController
-
+@Controller
 public class UserController {
     @Autowired
     private UserService userService;
-
     @GetMapping("/dashboard")
     public String dashboard(){
-        return "login succesful dashboard page";
+        return "dashboard_page";
     }
 
     @GetMapping("/users")
@@ -27,10 +25,10 @@ public class UserController {
         return ResponseEntity.ok(userService.getAll());
     }
 
-    /*@PostMapping("/register")
-    public void saveUser() throws Exception {
-        userService.save();
-    }*/
+    @GetMapping("/login")
+    public String login(){
+        return "login_page";
+    }
 
     @GetMapping("/admin")
     public String admin(Model model)
