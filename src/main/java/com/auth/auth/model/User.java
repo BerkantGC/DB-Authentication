@@ -44,6 +44,7 @@ public class User {
         }
         return new ArrayList<>();
     }
+
     @Override
     public int hashCode() {
         return Objects.hash(username, password);

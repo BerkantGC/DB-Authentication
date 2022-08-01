@@ -38,15 +38,17 @@ public class SecurityConfiguration{
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.formLogin().loginPage("/login").permitAll();
-
         http
                 .csrf().disable()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
+                .antMatcher("/login")
                 .addFilter(new JwtAuthenticationFilter(authenticationManager(http.getSharedObject(AuthenticationConfiguration.class))))
                 .addFilter(new JwtAuthorizationFilter(authenticationManager(http.getSharedObject(AuthenticationConfiguration.class)), customUserDetailsService))
                 .authorizeRequests()
                 .antMatchers("/users").hasAnyRole("ADMIN", "USER")
+                .and()
+                .authorizeRequests().antMatchers("/register").permitAll()
                 .and()
                 .authorizeRequests()
                 .antMatchers("/admin").hasRole("ADMIN")

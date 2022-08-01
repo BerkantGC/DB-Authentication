@@ -33,6 +33,17 @@ public class UserController {
         authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, user.getPassword()));
         return new ResponseEntity<>(username + user.getPassword(), HttpStatus.OK);    }
 
+    @GetMapping("/register")
+    public String registerPage(){
+        return "register_page";
+    }
+    @PostMapping("/register")
+    public ResponseEntity<User> register(@RequestBody User user){
+            System.out.println("Register request: " + user);
+            User registeredUser = userService.handleRegister(user);
+            return ResponseEntity.ok(registeredUser);
+    }
+
     @GetMapping("/users")
     public ResponseEntity<List<User>> users()  {
         return ResponseEntity.ok(userService.getAll());
