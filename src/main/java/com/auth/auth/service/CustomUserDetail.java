@@ -1,5 +1,6 @@
 package com.auth.auth.service;
 
+import com.auth.auth.model.User;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -14,15 +15,15 @@ public class CustomUserDetail implements UserDetails {
     private String password;
     private List<GrantedAuthority> roles;
 
-    public CustomUserDetail(String username, String password, List<String> roles) {
-        this.username = username;
-        this.password = password;
-        this.roles= roles.stream().map((role -> new SimpleGrantedAuthority("ROLE_" + role))).collect(Collectors.toList());
+    public CustomUserDetail(User user) {
+        this.username = user.getUsername();
+        this.password = user.getPassword();
+        this.roles= user.getRoleList().stream().map((role -> new SimpleGrantedAuthority("ROLE_" + role))).collect(Collectors.toList());
     }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        System.out.println(username + password + roles);
+        System.out.println(username + password + roles + "(Custom User Detail)");
         return roles;
     }
 

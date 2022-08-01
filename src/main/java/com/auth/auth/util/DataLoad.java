@@ -24,10 +24,10 @@ public class DataLoad implements ApplicationRunner {
 
     @Override
     public void run(ApplicationArguments args) throws Exception {
-        userRepository.deleteAll();
+       userRepository.deleteAll();
 
         User admin = User.builder().username("Berkant").password(passwordEncoder.encode("123456")).id(1L).roles("ADMIN").blocked(0).build();
-        userRepository.save(admin);
+       userRepository.save(admin);
 
         User user =  User.builder().username("Alexa").password(passwordEncoder.encode("123456")).id(2L).roles("USER").blocked(0).build();
         userRepository.save(user);

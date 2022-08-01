@@ -35,6 +35,7 @@ public class AuthApplication extends SpringBootServletInitializer {
 			}
 		};
 		tomcat.addAdditionalTomcatConnectors(redirectConnector());
+		tomcat.addAdditionalTomcatConnectors(httpToHttpsRedirectConnector());
 		return tomcat;
 	}
 
@@ -44,6 +45,14 @@ public class AuthApplication extends SpringBootServletInitializer {
 		connector.setPort(8083);
 		connector.setSecure(false);
 		connector.setRedirectPort(8443);
+		return connector;
+	}
+	private Connector httpToHttpsRedirectConnector() {
+		Connector connector = new Connector(TomcatServletWebServerFactory.DEFAULT_PROTOCOL);
+		connector.setScheme("http");
+		connector.setPort(8080);
+		connector.setSecure(false);
+		connector.setRedirectPort(8082);
 		return connector;
 	}
 
