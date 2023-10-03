@@ -1,2 +1,2 @@
 # DB-Authentication
-ConfigureDataBaseWithSpringSecurity
+Configure database with Spring Security
